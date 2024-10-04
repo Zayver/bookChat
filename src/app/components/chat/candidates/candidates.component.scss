@@ -1,0 +1,17 @@
+.wrapper{
+    @apply flex flex-col gap-3 w-full h-full
+        bg-lime-300 text-[var(--primary-color-text)] overflow-y-auto
+        p-6;
+
+    .candidate{
+        @apply flex flex-col gap-3 rounded-lg shadow-2xl p-5;
+
+        .title{
+            @apply font-extrabold text-center text-lg;
+        }
+
+        .link{
+            @apply text-center hover:underline hover:text-lime-900;
+        }
+    }
+}

@@ -5,9 +5,9 @@ import { RouterOutlet } from '@angular/router';
   selector: 'BookChat-root',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: `
+    <router-outlet/>
+  `
 })
 export class AppComponent {
-  title = 'bookChat';
 }

@@ -1,0 +1,6 @@
+<BookChat-frame>
+    <div class="wrapper">
+        <BookChat-prompt (candidates)="setCandidates($event)" class="prompt"/>
+        <BookChat-candidates class="candidates" [candidates]="this.candidates()"/>
+    </div>
+</BookChat-frame>

@@ -1,0 +1,9 @@
+@use "@styles/variables.scss";
+
+.wrapper{
+    @apply w-screen h-screen bg-[var(--surface-section)] flex;
+}
+
+.content{
+    @apply w-full rounded-2xl mt-5 mb-5 mr-5 overflow-hidden;
+}

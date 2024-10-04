@@ -1,0 +1,13 @@
+<div class="wrapper">
+    @for (candidate of candidates(); track $index) {
+        <div class="candidate">
+            <div class="title">
+                {{candidate.book}}
+            </div>
+            <p>{{candidate.message}}</p>
+            <div class="link">
+                <a [href]="candidate.bookUrl" target="_blank" rel="noopener noreferrer">Link</a>
+            </div>
+        </div>
+    }
+</div>

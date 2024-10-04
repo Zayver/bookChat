@@ -1,0 +1,37 @@
+.wrapper{
+    @apply flex flex-col p-5 pb-7 items-center h-full gap-2 text-[var(--primary-color-text)];
+
+    .messages{
+        @apply w-full h-full;
+    }
+
+    .input{
+        @apply flex items-center justify-center w-full mt-auto;
+
+        form{
+            @apply flex gap-2 items-center w-[70%];
+
+            input{
+                @apply w-full;
+            }
+        }
+    }
+
+    .messages{
+        @apply flex flex-col-reverse gap-3 pt-10 pb-16 pr-2 overflow-y-auto;
+
+        .msg{
+            @apply shadow-md rounded-md p-5 font-bold text-lg max-w-[50%] break-words;
+        }
+    
+        .send-msg{
+            @extend .msg;
+            @apply self-end bg-[var(--primary-300)];
+        }
+    
+        .receive-msg{
+            @extend .msg;
+            @apply self-start bg-[var(--primary-500)] flex flex-col gap-2 justify-center cursor-pointer hover:bg-lime-700;
+        }
+    }
+}

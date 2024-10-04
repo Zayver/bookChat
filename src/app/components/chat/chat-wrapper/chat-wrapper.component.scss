@@ -1,0 +1,14 @@
+.wrapper {
+    @apply flex w-full h-full bg-[var(--primary-100)];
+
+    .prompt {
+        @apply w-[80%] flex-1;
+    }
+    .candidates{
+        @apply w-[20%];
+    }
+
+    &>*:not(:last-child) {
+        @apply border-r border-lime-900;
+    }
+}
