@@ -11,4 +11,4 @@ COPY --from=builder /app/dist /app/dist
 COPY package*.json ./
 RUN npm install --only=production
 EXPOSE 4000
-CMD [node, dist/book-chat/server/server.mjs]
+CMD ["node", "dist/book-chat/server/server.mjs"]
