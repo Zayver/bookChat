@@ -1,11 +1,7 @@
 export interface PromptResponse{
-    message: string
-    audio: string | null
-    candidates: Candidates[]
+    text: string
+    audio_url: string | null
+    fragment_distance: FragmentDistance[]
 }
 
-export interface Candidates{
-    message: string
-    book: string 
-    bookUrl: string
-}
+export type FragmentDistance = [string, string, number, number, string]

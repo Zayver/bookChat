@@ -3,11 +3,11 @@
         <ng-icon name="lucideCircleX"></ng-icon>
     </p-button>
     @for (candidate of candidates(); track $index) {
-        <div class="candidate" (click)="openLink(candidate.bookUrl)">
+        <div class="candidate" (click)="openLink(candidate[4])">
             <div class="title">
-                {{candidate.book}}
+                {{candidate[1]}}
             </div>
-            <p>{{candidate.message}}</p>
+            <p>{{candidate[0]}}</p>
         </div>
     }@empty {
         <div class="empty">

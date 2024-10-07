@@ -3,7 +3,7 @@ import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Prompt } from '@model/prompt';
 import { PromptRequest } from '@model/prompt-request';
-import { Candidates, PromptResponse } from '@model/prompt-response';
+import { FragmentDistance } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideAudioLines, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
 import { PromptService } from '@services/prompt.service';
@@ -31,7 +31,7 @@ export class PromptComponent {
   promptForm: FormGroup
 
   prompts: Prompt[] = []
-  candidates = output<Candidates[]>()
+  candidates = output<FragmentDistance[]>()
   showCandidatesBar = output()
 
   constructor(private prompS: PromptService, private messageS: MessageService) {
@@ -65,7 +65,7 @@ export class PromptComponent {
         next: (v) => {
           this.promptForm.get("message")?.reset()
           this.prompts.unshift({ input: request, output: v })
-          this.candidates.emit(v.candidates)
+          this.candidates.emit(v.fragment_distance)
         },
         error:(err: HttpErrorResponse)=>{
           this.messageS.add({
@@ -76,7 +76,7 @@ export class PromptComponent {
       })
   }
 
-  selectMessage(candidates: Candidates[]){
+  selectMessage(candidates: FragmentDistance[]){
     this.candidates.emit(candidates)
   }
 

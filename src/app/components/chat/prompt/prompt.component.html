@@ -4,10 +4,10 @@
     </p-button>
     <div class="messages">
         @for (chat of this.prompts; track $index) {
-        <div class="receive-msg" (click)="this.selectMessage(chat.output.candidates)">
-            <p>{{chat.output.message}}</p>
-            @if (chat.output.audio) {
-            <audio controls [src]="chat.output.audio"></audio>
+        <div class="receive-msg" (click)="this.selectMessage(chat.output.fragment_distance)">
+            <p>{{chat.output.text}}</p>
+            @if (chat.output.audio_url) {
+            <audio controls [src]="chat.output.audio_url"></audio>
             }
         </div>
         <div class="send-msg">

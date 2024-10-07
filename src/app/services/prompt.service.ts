@@ -12,6 +12,6 @@ export class PromptService {
   constructor(private http: HttpClient) {}
 
   sendPrompt(request: PromptRequest): Observable<PromptResponse>{
-    return this.http.post<PromptResponse>(`${environment.apiUrl}/prompt`, request)
+    return this.http.post<PromptResponse>(`${environment.apiUrl}/msg`, request)
   }
 }

@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Candidates } from '@model/prompt-response';
+import { FragmentDistance } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCircleX } from '@ng-icons/lucide';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 })
 export class CandidatesComponent {
   closeSideBar = output()
-  candidates = input<Candidates[]>([])
+  candidates = input<FragmentDistance[]>([])
 
   closeSideBarEmit(){
     this.closeSideBar.emit()

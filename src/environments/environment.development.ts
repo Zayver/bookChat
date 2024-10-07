@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: ""
+    apiUrl: "http://systemqa_back_api:3000"
 };

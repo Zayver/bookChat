@@ -1,4 +1,4 @@
 export interface PromptRequest{
-    audio: boolean
+    generateAudio: boolean
     message: string
 }
