@@ -1,4 +1,5 @@
 import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
+import { isDevMode } from '@angular/core';
 import { PromptRequest } from '@model/prompt-request';
 import { PromptResponse } from '@model/prompt-response';
 import { delay, of } from 'rxjs';
@@ -28,6 +29,9 @@ const response: PromptResponse = {
 
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
+  if(!isDevMode()){
+    return next(req)
+  }
   if (req.url.includes("/prompt")) {
     const body: PromptRequest = req.body as PromptRequest
     const res: PromptResponse =  JSON.parse(JSON.stringify(response));

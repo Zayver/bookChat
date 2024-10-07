@@ -2,7 +2,7 @@
     p-button{
         border: unset;
     }
-    button{
+    button:not(p-toast button){
         background: linear-gradient(45deg, var(--primary), var(--accent));
         border: unset;
         box-shadow: unset;

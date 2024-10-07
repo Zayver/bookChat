@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Prompt } from '@model/prompt';
@@ -6,6 +7,7 @@ import { Candidates, PromptResponse } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideAudioLines, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
 import { PromptService } from '@services/prompt.service';
+import { MessageService } from 'primeng/api';
 import { AutoFocus } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
@@ -32,7 +34,7 @@ export class PromptComponent {
   candidates = output<Candidates[]>()
   showCandidatesBar = output()
 
-  constructor(private prompS: PromptService) {
+  constructor(private prompS: PromptService, private messageS: MessageService) {
     const fb = inject(FormBuilder)
     this.promptForm = fb.group({
       audio: [false],
@@ -64,6 +66,12 @@ export class PromptComponent {
           this.promptForm.get("message")?.reset()
           this.prompts.unshift({ input: request, output: v })
           this.candidates.emit(v.candidates)
+        },
+        error:(err: HttpErrorResponse)=>{
+          this.messageS.add({
+            severity: 'error',
+            summary: `Hubo un error al enviar la petición: ${err.status}`
+          })
         }
       })
   }
