@@ -17,6 +17,7 @@
       "@validators/*": ["./src/app/validators/*"],
       "@constants/*": ["./src/app/constants/*"],
       "@routes/*": ["./src/app/routes/*"],
+      "@directives/*": ["./src/app/directives/*"],
       "@testing/*": ["./src/app/test/*"],
     },
     "noImplicitOverride": true,

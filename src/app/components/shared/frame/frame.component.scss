@@ -1,9 +1,7 @@
-@use "@styles/variables.scss";
-
 .wrapper{
-    @apply w-screen h-screen bg-[var(--surface-section)] flex;
+    @apply w-screen h-screen bg-[var(--background-100)] flex flex-col;
 }
 
 .content{
-    @apply w-full rounded-2xl mt-5 mb-5 mr-5 overflow-hidden;
+    @apply h-full rounded-2xl m-4 mt-0 overflow-hidden;
 }

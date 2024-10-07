@@ -1,15 +1,15 @@
 <div class="wrapper">
     <div class="messages">
         @for (chat of this.prompts; track $index) {
-            <div class="receive-msg" (click)="this.selectMessage(chat.output.candidates)">
-                <p>{{chat.output.message}}</p>
-                @if (chat.output.audio) {
-                    <audio controls [src]="chat.output.audio"></audio>
-                }
-            </div>
-            <div class="send-msg">
-                <p>{{chat.input.message}}</p>
-            </div>
+        <div class="receive-msg" (click)="this.selectMessage(chat.output.candidates)">
+            <p>{{chat.output.message}}</p>
+            @if (chat.output.audio) {
+            <audio controls [src]="chat.output.audio"></audio>
+            }
+        </div>
+        <div class="send-msg">
+            <p>{{chat.input.message}}</p>
+        </div>
         }
     </div>
 
@@ -19,12 +19,18 @@
                 <ng-icon name="lucideAudioLines"></ng-icon>
             </p-button>
 
-            <input type="text" pInputText placeholder="Enviar mensaje" formControlName="message">
+            <div class="prompt">
+                <textarea pAutoFocus [autofocus]="true" pInputTextarea [autoResize]="true" [rows]="1" placeholder="Enviar mensaje"
+                    formControlName="message" (keypress)="checkEnter($event)"></textarea>
+            </div>
+
 
             <p-button type="submit" [disabled]="!this.promptForm.valid" [loading]="this.loading()">
-                <ng-icon name="lucideSendHorizontal"></ng-icon>
+                @if (!loading()) {
+                    <ng-icon name="lucideSendHorizontal"></ng-icon>
+                }
             </p-button>
         </form>
     </div>
-    
+
 </div>

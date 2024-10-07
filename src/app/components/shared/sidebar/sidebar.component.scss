@@ -1,7 +1,14 @@
 .sidebar{
-    @apply h-screen w-20 flex p-5 flex-col items-center bg-[var(--surface-color)] text-[var(--primary-text)];
+    @apply w-screen h-14 flex items-center justify-center px-5 text-[var(--text)];
 
+    h1{
+        @apply font-extrabold text-2xl mx-auto;
+        background: linear-gradient(120deg, var(--primary), var(--secondary));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
     .icon-holder{
-        @apply flex items-center justify-center w-fit h-fit bg-[var(--primary-color)] p-2 rounded-md mb-auto;
+        @apply flex mt-auto items-center justify-center w-fit h-fit bg-[var(--primary)] p-2 rounded-md mb-auto;
     }
 }

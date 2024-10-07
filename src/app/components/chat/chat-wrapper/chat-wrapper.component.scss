@@ -1,14 +1,16 @@
+@use "@styles/components.scss";
+
 .wrapper {
-    @apply flex w-full h-full bg-[var(--primary-100)];
+    @apply flex w-full h-full bg-[var(--background-50)];
+    //background: linear-gradient(to right, var(--primary), var(--secondary));
 
     .prompt {
-        @apply w-[80%] flex-1;
+        @apply w-[70%] flex-1;
     }
     .candidates{
-        @apply w-[20%];
+        @apply w-[30%];
     }
 
-    &>*:not(:last-child) {
-        @apply border-r border-lime-900;
-    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-300) transparent;
 }
