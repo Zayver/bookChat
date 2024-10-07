@@ -5,10 +5,10 @@
     //background: linear-gradient(to right, var(--primary), var(--secondary));
 
     .prompt {
-        @apply w-[70%] flex-1;
+        @apply w-full md:w-[70%] relative flex-1;
     }
     .candidates{
-        @apply w-[30%];
+        
     }
 
     scrollbar-width: thin;

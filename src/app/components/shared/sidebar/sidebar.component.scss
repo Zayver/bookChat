@@ -1,8 +1,8 @@
 .sidebar{
-    @apply w-screen h-14 flex items-center justify-center px-5 text-[var(--text)];
+    @apply w-screen md:h-14 h-20 flex items-center justify-center px-5 gap-2 text-[var(--text)];
 
     h1{
-        @apply font-extrabold text-2xl mx-auto;
+        @apply font-extrabold text-2xl mx-auto text-center;
         background: linear-gradient(120deg, var(--primary), var(--secondary));
         background-clip: text;
         -webkit-background-clip: text;

@@ -1,11 +1,15 @@
 .wrapper {
     @apply flex flex-col p-5 pb-7 items-center h-full gap-2 text-[var(--primary-color-text)];
 
+    ng-icon {
+        color: var(--text);
+    }
+
     .input {
-        @apply flex items-center justify-end w-full mt-auto;
+        @apply flex items-center md:justify-end justify-center w-full mt-auto;
 
         form {
-            @apply flex gap-2 items-center w-[90%] bg-[var(--background-100)] px-4 py-2 rounded-full;
+            @apply flex gap-2 items-center md:w-[90%] w-full bg-[var(--background-100)] px-4 py-2 rounded-full;
 
             .prompt {
                 @apply w-full max-h-32 overflow-y-auto;
@@ -16,10 +20,6 @@
                     background: transparent;
                 }
             }
-        }
-
-        ng-icon {
-            color: var(--text);
         }
     }
 
@@ -46,8 +46,12 @@
             @apply flex justify-center items-center w-full h-full;
 
             h1{
-                @apply text-2xl font-extrabold text-[var(--text-300)];
+                @apply text-2xl font-extrabold text-[var(--text-300)] text-center;
             }
         }
+    }
+
+    .side-bar-toggle{
+        @apply md:hidden absolute top-2 right-2;
     }
 }

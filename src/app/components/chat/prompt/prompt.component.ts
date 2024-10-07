@@ -4,7 +4,7 @@ import { Prompt } from '@model/prompt';
 import { PromptRequest } from '@model/prompt-request';
 import { Candidates, PromptResponse } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideAudioLines, lucideSendHorizontal } from '@ng-icons/lucide';
+import { lucideAudioLines, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
 import { PromptService } from '@services/prompt.service';
 import { AutoFocus } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button'
@@ -21,17 +21,16 @@ import { finalize } from 'rxjs';
   ],
   templateUrl: './prompt.component.html',
   styleUrl: './prompt.component.scss',
-  providers: [provideIcons({ lucideAudioLines, lucideSendHorizontal })]
+  providers: [provideIcons({ lucideAudioLines, lucideSendHorizontal, lucideMenu})]
 })
 export class PromptComponent {
   loading = signal(false)
 
   promptForm: FormGroup
 
-  promptResponse = output<PromptResponse>()
-
   prompts: Prompt[] = []
   candidates = output<Candidates[]>()
+  showCandidatesBar = output()
 
   constructor(private prompS: PromptService) {
     const fb = inject(FormBuilder)
@@ -79,7 +78,7 @@ export class PromptComponent {
       this.sendPrompt()
     }
   }
-  checkInput(event: InputEvent){
-
+  showCandidatesBarOnClick(){
+    this.showCandidatesBar.emit()
   }
 }

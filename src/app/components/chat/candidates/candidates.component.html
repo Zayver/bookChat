@@ -1,10 +1,17 @@
 <div class="wrapper">
+    <p-button (onClick)="closeSideBarEmit()">
+        <ng-icon name="lucideCircleX"></ng-icon>
+    </p-button>
     @for (candidate of candidates(); track $index) {
-        <div class="candidate">
+        <div class="candidate" (click)="openLink(candidate.bookUrl)">
             <div class="title">
                 {{candidate.book}}
             </div>
             <p>{{candidate.message}}</p>
+        </div>
+    }@empty {
+        <div class="empty">
+            <h1>Selecciona un mensaje para ver las fuentes</h1>
         </div>
     }
 </div>

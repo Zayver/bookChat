@@ -6,10 +6,24 @@
         @apply flex flex-col gap-3 rounded-lg shadow-md p-3 bg-[var(--primary-500)]
             break-words text-[var(--primary-color-text)] hover:scale-110 cursor-pointer;
         
-        transition: transform 0.1s ease-in-out;
-
         .title{
             @apply font-extrabold text-center text-lg;
+        }
+    }
+
+    ng-icon{
+        @apply text-[var(--text)]
+    }
+
+    p-button{
+        @apply md:hidden absolute top-2 right-2;
+    }
+
+    .empty{
+        @apply w-full h-full flex items-center justify-center;
+
+        h1{
+            @apply text-2xl font-extrabold text-[var(--text-300)] text-center;
         }
     }
 }

@@ -1,6 +1,7 @@
 <BookChat-frame>
     <div class="wrapper">
-        <BookChat-prompt (candidates)="setCandidates($event)" class="prompt"/>
-        <BookChat-candidates class="candidates" [candidates]="this.candidates()"/>
+        <BookChat-prompt (candidates)="setCandidates($event)" (showCandidatesBar)="this.toggleCandidates()" class="prompt"/>
+        <BookChat-candidates class="w-full md:w-[30%] transform -translate-x-full fixed top-0 left-0 h-full transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0" (closeSideBar)="this.toggleCandidates()" [candidates]="this.candidates()" #candidatesBar/>
     </div>
 </BookChat-frame>

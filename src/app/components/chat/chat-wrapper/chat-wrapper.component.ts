@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { FrameComponent } from '@components/shared/frame/frame.component';
 import { PromptComponent } from '../prompt/prompt.component';
 import { CandidatesComponent } from '../candidates/candidates.component';
@@ -14,10 +14,17 @@ import { Candidates } from '@model/prompt-response';
 })
 export class ChatWrapper {
   candidates = signal<Candidates[]>([])
-  constructor() {
-  }
+
+  @ViewChild('candidatesBar', {read: ElementRef})
+  private candidatesBar!: ElementRef
+
+  constructor() {}
 
   setCandidates(candidates: Candidates[]){
     this.candidates.set(candidates)
+  }
+
+  toggleCandidates(){
+    this.candidatesBar.nativeElement.classList.toggle('-translate-x-full')
   }
 }
