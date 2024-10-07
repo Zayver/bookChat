@@ -9,6 +9,12 @@
         -webkit-text-fill-color: transparent;
     }
     .icon-holder{
-        @apply flex mt-auto items-center justify-center w-fit h-fit bg-[var(--primary)] p-2 rounded-md mb-auto;
+        @apply flex mt-auto items-center justify-center w-fit h-fit bg-[var(--primary)] p-2 rounded-md mb-auto
+            text-[var(--text-100)]
+        ;
+    }
+
+    .theme-switcher{
+        @apply cursor-pointer hover:text-[var(--text-300)];
     }
 }
