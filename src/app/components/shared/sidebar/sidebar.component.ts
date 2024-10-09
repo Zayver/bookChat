@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { NgIconComponent, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
-import { lucideBookOpenCheck, lucideMoon, lucideSun } from '@ng-icons/lucide'
-import { PAGE_THEME, ThemeService } from '@services/theme.service';
+import { lucideMoon, lucideSun } from '@ng-icons/lucide'
+import { ThemeService } from '@services/theme.service';
 
 @Component({
   selector: 'BookChat-sidebar',
@@ -10,7 +10,7 @@ import { PAGE_THEME, ThemeService } from '@services/theme.service';
   imports: [NgIconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  providers: [provideNgIconsConfig({size:'2rem'}),provideIcons({lucideBookOpenCheck, lucideMoon, lucideSun})]
+  providers: [provideNgIconsConfig({size:'2rem'}),provideIcons({lucideMoon, lucideSun})]
 })
 export class SidebarComponent {
   constructor(private themeS: ThemeService){

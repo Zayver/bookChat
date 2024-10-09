@@ -3,7 +3,7 @@
     background: linear-gradient(90deg, var(--background-50), var(--background-200));
 
     .candidate{
-        @apply flex flex-col gap-3 rounded-lg shadow-md p-3 bg-[var(--primary-600)]
+        @apply flex flex-col gap-3 rounded-lg shadow-md p-3 bg-[var(--primary)]
             break-words text-[var(--primary-color-text)] hover:scale-110 cursor-pointer;
         
         .title{

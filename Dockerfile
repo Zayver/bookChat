@@ -9,6 +9,6 @@ FROM node:lts
 WORKDIR /app
 COPY --from=builder /app/dist /app/dist
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm install --omit=dev
 EXPOSE 4000
 CMD ["node", "dist/book-chat/server/server.mjs"]

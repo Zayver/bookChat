@@ -1,5 +1,5 @@
 .sidebar{
-    @apply w-screen md:h-14 h-20 flex items-center justify-center px-5 gap-2 text-[var(--text)];
+    @apply w-screen md:h-14 h-20 flex items-center justify-center px-5 gap-2 text-[var(--accent)];
 
     h1{
         @apply font-extrabold text-2xl mx-auto text-center;
@@ -9,9 +9,12 @@
         -webkit-text-fill-color: transparent;
     }
     .icon-holder{
-        @apply flex mt-auto items-center justify-center w-fit h-fit bg-[var(--primary)] p-2 rounded-md mb-auto
-            text-[var(--text-100)]
-        ;
+        @apply flex mt-auto items-center justify-center 
+            max-w-fit h-[90%] bg-[var(--accent)] p-2 rounded-md mb-auto;
+
+        img{
+            @apply max-w-full max-h-full object-contain;
+        }
     }
 
     .theme-switcher{

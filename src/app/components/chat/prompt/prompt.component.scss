@@ -38,8 +38,8 @@
 
         .receive-msg {
             @extend .msg;
-            @apply w-full self-start bg-[var(--primary-600)] flex flex-col gap-2 
-                justify-center cursor-pointer hover:bg-[var(--primary-700)];
+            @apply w-full self-start bg-[var(--primary)] flex flex-col gap-2 
+                justify-center cursor-pointer hover:bg-[var(--primary-800)];
         }
 
         .empty{
@@ -53,5 +53,13 @@
 
     .side-bar-toggle{
         @apply md:hidden absolute top-2 right-2;
+    }
+}
+
+.audio-button{
+    ::ng-deep{
+        button{
+            @apply hover:bg-[var(--accent)];
+        }
     }
 }

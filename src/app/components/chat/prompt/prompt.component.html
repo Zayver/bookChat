@@ -22,7 +22,7 @@
 
     <div class="input">
         <form [formGroup]="this.promptForm" (ngSubmit)="this.sendPrompt()">
-            <p-button [severity]="this.audioStatus" (onClick)="this.setAudioFlag()">
+            <p-button class="audio-button" [severity]="this.audioStatus" (onClick)="this.setAudioFlag()">
                 <ng-icon name="lucideAudioLines"></ng-icon>
             </p-button>
 

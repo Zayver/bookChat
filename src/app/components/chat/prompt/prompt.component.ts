@@ -81,7 +81,7 @@ export class PromptComponent {
   }
 
   checkEnter(event: KeyboardEvent){
-    if(event.key === "Enter" && !event.shiftKey){
+    if(event.key === "Enter" && !event.shiftKey && this.promptForm.valid){
       event.preventDefault()
       this.sendPrompt()
     }
