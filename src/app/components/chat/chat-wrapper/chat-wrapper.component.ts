@@ -4,7 +4,7 @@ import { PromptComponent } from '../prompt/prompt.component';
 import { CandidatesComponent } from '../candidates/candidates.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { FragmentDistance } from '@model/prompt-response';
+import { Candidate } from '@model/prompt-response';
 
 
 @Component({
@@ -16,14 +16,14 @@ import { FragmentDistance } from '@model/prompt-response';
   providers:[MessageService]
 })
 export class ChatWrapper {
-  candidates = signal<FragmentDistance[]>([])
+  candidates = signal<Candidate>([])
 
   @ViewChild('candidatesBar', {read: ElementRef})
   private candidatesBar!: ElementRef
 
   constructor() {}
 
-  setCandidates(candidates: FragmentDistance[]){
+  setCandidates(candidates: Candidate){
     this.candidates.set(candidates)
   }
 

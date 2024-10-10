@@ -7,7 +7,7 @@ import threading
 app = Flask(__name__)
 
 #CORS(app)
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Authorization"])
+#CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Authorization"])
 
 @app.route("/")
 def index():

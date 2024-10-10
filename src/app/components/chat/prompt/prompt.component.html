@@ -3,7 +3,7 @@
         <ng-icon name="lucideMenu"></ng-icon>
     </p-button>
     <div class="messages">
-        @for (chat of this.prompts; track $index) {
+        @for (chat of this.prompts$ | async; track $index) {
         <div class="receive-msg" (click)="this.selectMessage(chat.output.fragment_distance)">
             <p>{{chat.output.text}}</p>
             @if (chat.output.audio_url) {

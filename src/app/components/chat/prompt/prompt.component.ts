@@ -1,9 +1,10 @@
+import { AsyncPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Prompt } from '@model/prompt';
 import { PromptRequest } from '@model/prompt-request';
-import { FragmentDistance } from '@model/prompt-response';
+import { Candidate, FragmentDistance } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideAudioLines, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
 import { PromptService } from '@services/prompt.service';
@@ -12,51 +13,56 @@ import { AutoFocus } from 'primeng/autofocus';
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { finalize } from 'rxjs';
+import { finalize, Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'BookChat-prompt',
   standalone: true,
   imports: [
     InputTextModule, InputTextareaModule, ButtonModule, NgIcon, 
-    ReactiveFormsModule, AutoFocus
+    ReactiveFormsModule, AutoFocus, AsyncPipe
   ],
   templateUrl: './prompt.component.html',
   styleUrl: './prompt.component.scss',
   providers: [provideIcons({ lucideAudioLines, lucideSendHorizontal, lucideMenu})]
 })
-export class PromptComponent {
+export class PromptComponent implements OnInit {
   loading = signal(false)
 
   promptForm: FormGroup
 
-  prompts: Prompt[] = []
-  candidates = output<FragmentDistance[]>()
+  prompts$!: Observable< Prompt[]>
+  candidates = output<Candidate>()
   showCandidatesBar = output()
 
-  constructor(private prompS: PromptService, private messageS: MessageService) {
+  constructor(private promptService: PromptService, private messageS: MessageService) {
     const fb = inject(FormBuilder)
     this.promptForm = fb.group({
-      audio: [false],
+      generateAudio: [false],
       message: ['', Validators.required]
     })
   }
 
+  ngOnInit(): void {
+    this.prompts$ = this.promptService.getPrompts()
+  }
+
   get audioStatus() {
-    const audio = this.promptForm.get("audio") as FormControl
+    const audio = this.promptForm.get("generateAudio") as FormControl
     return audio.value ? 'primary' : 'secondary'
   }
 
   setAudioFlag() {
-    const audio = this.promptForm.get("audio") as FormControl
+    const audio = this.promptForm.get("generateAudio") as FormControl
     audio.setValue(!audio.value)
   }
 
   sendPrompt() {
     this.loading.set(true)
     const request = this.promptForm.value as PromptRequest
-    this.prompS.sendPrompt(request)
+    this.promptService.sendPrompt(request)
       .pipe(
+        tap(res => this.promptService.addToCache({input: request, output: res})),
         finalize(() => {
           this.loading.set(false)
         })
@@ -64,8 +70,8 @@ export class PromptComponent {
       .subscribe({
         next: (v) => {
           this.promptForm.get("message")?.reset()
-          this.prompts.unshift({ input: request, output: v })
           this.candidates.emit(v.fragment_distance)
+          this.promptForm.get("generateAudio")?.setValue(false)
         },
         error:(err: HttpErrorResponse)=>{
           this.messageS.add({
@@ -76,7 +82,7 @@ export class PromptComponent {
       })
   }
 
-  selectMessage(candidates: FragmentDistance[]){
+  selectMessage(candidates: Candidate){
     this.candidates.emit(candidates)
   }
 

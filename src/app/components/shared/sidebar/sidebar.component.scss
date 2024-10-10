@@ -2,11 +2,7 @@
     @apply w-screen md:h-14 h-20 flex items-center justify-center px-5 gap-2 text-[var(--accent)];
 
     h1{
-        @apply font-extrabold text-2xl mx-auto text-center;
-        background: linear-gradient(120deg, var(--primary), var(--secondary));
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        @apply font-extrabold text-2xl mx-auto text-center text-[var(--accent)];
     }
     .icon-holder{
         @apply flex mt-auto items-center justify-center 

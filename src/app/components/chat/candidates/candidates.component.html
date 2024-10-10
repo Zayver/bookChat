@@ -2,16 +2,23 @@
     <p-button (onClick)="closeSideBarEmit()">
         <ng-icon name="lucideCircleX"></ng-icon>
     </p-button>
-    @for (candidate of candidates(); track $index) {
-        <div class="candidate" (click)="openLink(candidate[4])">
-            <div class="title">
-                {{candidate[1]}}
+    @if (this.candidates() !== "None") {
+        @for (candidate of candidates(); track $index) {
+            <div class="candidate" (click)="openLink(candidate[4])">
+                <div class="title">
+                    {{candidate[1] | transformBookName}}
+                </div>
+                <p>{{candidate[0]}}</p>
+                <h2 class="self-center">Pág: {{candidate[2]}}</h2>
             </div>
-            <p>{{candidate[0]}}</p>
-        </div>
-    }@empty {
+        }@empty {
+            <div class="empty">
+                <h1>Selecciona un mensaje para ver las fuentes</h1>
+            </div>
+        }
+    }@else {
         <div class="empty">
-            <h1>Selecciona un mensaje para ver las fuentes</h1>
+            <h1>El mensaje no tiene fragmentos</h1>
         </div>
     }
 </div>
