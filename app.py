@@ -45,13 +45,21 @@ def msg():
     Raises:
         400: Bad Request if an error occurs during processing.
     """
+    data = request.json
+    print(data)
     result_json = { 
         "text": "Este es un mensaje de prueba el principal",
-        "audio_url": None,
+        "audio_url": r"https://dn720308.ca.archive.org/0/items/chrono-trigger-corridors-of-time-square-1995-snes/%C2%ABChrono%20Trigger%C2%BB%20-%20Corridors%20of%20Time%20%28Square%2C1995%2CSNES%29.mp3",
         "fragment_distance": [
-            ['TEXTO POR DEFECTO','NOMBRE_LIBRO', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
-            ['TEXTO POR DEFECTO','NOMBRE_LIBRO', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
-            ['TEXTO POR DEFECTO','NOMBRE_LIBRO', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html']
+            ['TEXTO POR DEFECTO','Libro_test.pdf', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
+            ['TEXTO POR DEFECTO','Libro_test.pdf', 2, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
+            ['TEXTO POR DEFECTO','Libro_test.pdf', 3, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html']
         ]
     }
+    if data["generateAudio"] == "0":
+        result_json["audio_url"]= None
+
+    if data["message"] == "none":
+        result_json["fragment_distance"] = "None"
+
     return jsonify(result_json), 200

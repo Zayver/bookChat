@@ -38,8 +38,8 @@ export class PromptComponent implements OnInit {
   constructor(private promptService: PromptService, private messageS: MessageService) {
     const fb = inject(FormBuilder)
     this.promptForm = fb.group({
-      generateAudio: [false],
-      message: ['', Validators.required]
+      generateAudio: ["0"],
+      message: ['', [Validators.required, this.sanitizeInputArea]]
     })
   }
 
@@ -49,12 +49,16 @@ export class PromptComponent implements OnInit {
 
   get audioStatus() {
     const audio = this.promptForm.get("generateAudio") as FormControl
-    return audio.value ? 'primary' : 'secondary'
+    return audio.value === "1" ? 'primary' : 'secondary'
   }
 
   setAudioFlag() {
     const audio = this.promptForm.get("generateAudio") as FormControl
-    audio.setValue(!audio.value)
+    if(audio.value === "1"){
+      audio.setValue("0")
+    }else{
+      audio.setValue("1")
+    }
   }
 
   sendPrompt() {
@@ -71,7 +75,7 @@ export class PromptComponent implements OnInit {
         next: (v) => {
           this.promptForm.get("message")?.reset()
           this.candidates.emit(v.fragment_distance)
-          this.promptForm.get("generateAudio")?.setValue(false)
+          this.promptForm.get("generateAudio")?.setValue("0")
         },
         error:(err: HttpErrorResponse)=>{
           this.messageS.add({
@@ -94,5 +98,13 @@ export class PromptComponent implements OnInit {
   }
   showCandidatesBarOnClick(){
     this.showCandidatesBar.emit()
+  }
+
+  sanitizeInputArea(control: any): { [key: string]: boolean } | null {
+    const value = control.value || '';
+    if (value.trim().length === 0) {
+      return { onlyNewLines: true };
+    }
+    return null;
   }
 }
