@@ -4,9 +4,9 @@ import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Prompt } from '@model/prompt';
 import { PromptRequest } from '@model/prompt-request';
-import { Candidate, FragmentDistance } from '@model/prompt-response';
+import { Candidate } from '@model/prompt-response';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideAudioLines, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
+import { lucideAudioLines, lucideEraser, lucideMenu, lucideSendHorizontal } from '@ng-icons/lucide';
 import { PromptService } from '@services/prompt.service';
 import { MessageService } from 'primeng/api';
 import { AutoFocus } from 'primeng/autofocus';
@@ -19,21 +19,24 @@ import { finalize, Observable, tap } from 'rxjs';
   selector: 'BookChat-prompt',
   standalone: true,
   imports: [
-    InputTextModule, InputTextareaModule, ButtonModule, NgIcon, 
+    InputTextModule, InputTextareaModule, ButtonModule, NgIcon,
     ReactiveFormsModule, AutoFocus, AsyncPipe
   ],
   templateUrl: './prompt.component.html',
   styleUrl: './prompt.component.scss',
-  providers: [provideIcons({ lucideAudioLines, lucideSendHorizontal, lucideMenu})]
+  providers: [provideIcons({ lucideAudioLines, lucideSendHorizontal, lucideMenu, lucideEraser })]
 })
 export class PromptComponent implements OnInit {
   loading = signal(false)
 
   promptForm: FormGroup
 
-  prompts$!: Observable< Prompt[]>
+  prompts$!: Observable<Prompt[]>
   candidates = output<Candidate>()
   showCandidatesBar = output()
+
+  atBottom = signal(false)
+  showClearMessages = signal(false)
 
   constructor(private promptService: PromptService, private messageS: MessageService) {
     const fb = inject(FormBuilder)
@@ -54,19 +57,21 @@ export class PromptComponent implements OnInit {
 
   setAudioFlag() {
     const audio = this.promptForm.get("generateAudio") as FormControl
-    if(audio.value === "1"){
+    if (audio.value === "1") {
       audio.setValue("0")
-    }else{
+    } else {
       audio.setValue("1")
     }
   }
 
   sendPrompt() {
     this.loading.set(true)
+    this.atBottom.set(false)
+    this.showClearMessages.set(false)
     const request = this.promptForm.value as PromptRequest
     this.promptService.sendPrompt(request)
       .pipe(
-        tap(res => this.promptService.addToCache({input: request, output: res})),
+        tap(res => this.promptService.addToCache({ input: request, output: res })),
         finalize(() => {
           this.loading.set(false)
         })
@@ -77,7 +82,7 @@ export class PromptComponent implements OnInit {
           this.candidates.emit(v.fragment_distance)
           this.promptForm.get("generateAudio")?.setValue("0")
         },
-        error:(err: HttpErrorResponse)=>{
+        error: (err: HttpErrorResponse) => {
           this.messageS.add({
             severity: 'error',
             summary: `Hubo un error al enviar la petición: ${err.status}`
@@ -86,18 +91,25 @@ export class PromptComponent implements OnInit {
       })
   }
 
-  selectMessage(candidates: Candidate){
+  selectMessage(candidates: Candidate) {
     this.candidates.emit(candidates)
   }
 
-  checkEnter(event: KeyboardEvent){
-    if(event.key === "Enter" && !event.shiftKey && this.promptForm.valid){
+  checkEnter(event: KeyboardEvent) {
+    if (event.key === "Enter" && !event.shiftKey && this.promptForm.valid) {
       event.preventDefault()
       this.sendPrompt()
     }
   }
-  showCandidatesBarOnClick(){
+  showCandidatesBarOnClick() {
     this.showCandidatesBar.emit()
+  }
+
+  clearChat(){
+    this.promptService.clearCache()
+    this.atBottom.set(false)
+    this.showClearMessages.set(false)
+    this.candidates.emit([])
   }
 
   sanitizeInputArea(control: any): { [key: string]: boolean } | null {
@@ -106,5 +118,28 @@ export class PromptComponent implements OnInit {
       return { onlyNewLines: true };
     }
     return null;
+  }
+
+  onScroll(event: any) {
+    const scrollContainer = event.target as HTMLElement
+    const scrollTop = scrollContainer.scrollTop;
+    const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
+    this.atBottom.set(scrollTop === 0)
+    if(scrollTop < -70 && isScrollable){
+      this.showClearMessages.set(false)
+    }
+  }
+
+  onWheel(event: WheelEvent) {
+    const scrollContainer = event.target as HTMLElement
+    const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
+    if((this.atBottom() || !isScrollable)){
+      if(event.deltaY > 20 && !this.showClearMessages()){
+        this.showClearMessages.set(true)
+      }
+    }
+    if(!isScrollable && event.deltaY < 0){
+      this.showClearMessages.set(false)
+    }
   }
 }

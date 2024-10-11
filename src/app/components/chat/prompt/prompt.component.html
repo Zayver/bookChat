@@ -2,8 +2,14 @@
     <p-button class="side-bar-toggle" (onClick)="this.showCandidatesBarOnClick()">
         <ng-icon name="lucideMenu"></ng-icon>
     </p-button>
-    <div class="messages">
-        @for (chat of this.prompts$ | async; track $index) {
+    <div class="messages" (scroll)="this.onScroll($event)" (wheel)="this.onWheel($event)">
+        @let prompts = this.prompts$ | async;
+        @if (this.showClearMessages() && prompts?.length) {
+            <p-button class="self-center transition-opacity" [rounded]="true" (onClick)="this.clearChat()">
+                <ng-icon class="mr-1" name="lucideEraser"></ng-icon> <span class="text-[var(--text)]">Borrar conversación</span>
+            </p-button>
+        }
+        @for (chat of prompts; track $index) {
         <div class="receive-msg" (click)="this.selectMessage(chat.output.fragment_distance)">
             <p>{{chat.output.text}}</p>
             @if (chat.output.audio_url) {
@@ -22,7 +28,7 @@
 
     <div class="input">
         <form [formGroup]="this.promptForm" (ngSubmit)="this.sendPrompt()">
-            <p-button class="audio-button" [severity]="this.audioStatus" (onClick)="this.setAudioFlag()">
+            <p-button title="Generar audio" class="audio-button" [severity]="this.audioStatus" (onClick)="this.setAudioFlag()">
                 <ng-icon name="lucideAudioLines"></ng-icon>
             </p-button>
 

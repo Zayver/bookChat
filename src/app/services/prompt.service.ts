@@ -45,6 +45,11 @@ export class PromptService {
     return this.http.post<PromptResponse>(`${environment.apiUrl}/msg`, request)
   }
 
+  clearCache(){
+    this.prompts$.next([])
+    localStorage.removeItem(this.cacheKey)
+  }
+
   private syncToStorage(cache: Prompt[]){
     localStorage.setItem(this.cacheKey, JSON.stringify(cache));
   }

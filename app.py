@@ -7,7 +7,7 @@ import threading
 app = Flask(__name__)
 
 #CORS(app)
-#CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["Authorization"])
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True, allow_headers=["*"])
 
 @app.route("/")
 def index():
@@ -48,10 +48,10 @@ def msg():
     data = request.json
     print(data)
     result_json = { 
-        "text": "Este es un mensaje de prueba el principal",
+        "text": "Este es un mensaje de prueba el principal: ",
         "audio_url": r"https://dn720308.ca.archive.org/0/items/chrono-trigger-corridors-of-time-square-1995-snes/%C2%ABChrono%20Trigger%C2%BB%20-%20Corridors%20of%20Time%20%28Square%2C1995%2CSNES%29.mp3",
         "fragment_distance": [
-            ['TEXTO POR DEFECTO','Libro_test.pdf', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
+            ['TEXTO POR DEFECTO: ','Libro_test.pdf', 1, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
             ['TEXTO POR DEFECTO','Libro_test.pdf', 2, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html'],
             ['TEXTO POR DEFECTO','Libro_test.pdf', 3, 1,'https://manybooks.net/titles/poeedgaretext00poe1v10.html']
         ]
@@ -61,5 +61,8 @@ def msg():
 
     if data["message"] == "none":
         result_json["fragment_distance"] = "None"
+
+    result_json['text'] += data['message']
+    result_json['fragment_distance'][0][0] += data['message']
 
     return jsonify(result_json), 200
